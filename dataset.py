@@ -44,12 +44,13 @@ class InputDataset(Dataset):
         self.tokenizer=tokenizer
         self.max_target_length = max_source_chinese_length
         self.max_source_length= max_source_chinese_length*6
+        self.prefix = "Translate from Pinyin to Chinese: "
         
     def __len__(self,):
         return len(self.test)
     
     def __getitem__(self,item):
-        input_sequence = self.input[item]
+        input_sequence = self.prefix + self.input[item]
         output_sequence = self.test[item]
         
         encoding = self.tokenizer(
