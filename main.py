@@ -9,11 +9,11 @@ from tqdm.auto import tqdm
 
 
 def main():
-    path='./data'
+    path='.s/data'
     tokenizer = T5Tokenizer.from_pretrained("t5-base")
     model = T5ForConditionalGeneration.from_pretrained("t5-base")
     train_dataset=InputDataset(path,tokenizer)
-    train_dataloader = DataLoader(train_dataset,batch_size=4)
+    train_dataloader = DataLoader(train_dataset,batch_size=18)
 
     optimizer = AdamW(model.parameters(), lr=3e-4)
     num_epochs = 3

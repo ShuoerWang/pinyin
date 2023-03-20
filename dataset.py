@@ -9,7 +9,7 @@ def split_line(line, max_length=512):
     return chunks
 
 def translate(input):
-    output = input
+    output = input.copy()
     for k in range(len(output)):
         i = 0;
         while i < len(output[k]):
