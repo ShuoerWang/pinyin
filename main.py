@@ -34,7 +34,7 @@ def main():
     model.resize_token_embeddings(len(tokenizer))
 
     train_dataset=InputDataset(path,tokenizer)
-    train_dataloader = DataLoader(train_dataset,batch_size=18)
+    train_dataloader = DataLoader(train_dataset,batch_size=1)
 
     optimizer = AdamW(model.parameters(), lr=3e-4)
     num_epochs = 3

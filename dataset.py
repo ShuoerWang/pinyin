@@ -97,11 +97,11 @@ class InputDataset(Dataset):
 
 if __name__=='__main__':
     path='./data2'
-    # data = load_data(path)
-    # output = translate(data, path)
-    # print("*******")
-    # print(len(data))
-    # print(len(output))
+    data = load_data(path)
+    output = translate(data, path)
+    print("*******")
+    print(len(data))
+    print(len(output))
     input_path=osp.join(path, 'data_label.txt')
     line_count = 0
 
