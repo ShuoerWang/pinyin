@@ -11,7 +11,7 @@ def split_line(line, max_length=512):
 def translate(input):
     output = input.copy()
     for k in range(len(output)):
-        i = 0;
+        i = 0
         while i < len(output[k]):
             if re.search('[\u4e00-\u9fff]', output[k][i]):
                 py = str(pinyin(output[k][i], style=0)[0][0])

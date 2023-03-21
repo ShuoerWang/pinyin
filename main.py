@@ -9,7 +9,7 @@ from tqdm.auto import tqdm
 
 
 def main():
-    path='.s/data'
+    path='./data'
     # tokenizer = T5Tokenizer.from_pretrained("t5-base")
     # model = T5ForConditionalGeneration.from_pretrained("t5-base")
     pretrained_model = "IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese"
