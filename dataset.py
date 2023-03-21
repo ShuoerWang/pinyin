@@ -48,7 +48,7 @@ class InputDataset(Dataset):
         label_path=osp.join(path, 'data_label.txt')
         if os.path.exists(label_path):
             self.input = []
-            with open(input_path, 'r',encoding="utf-8") as file:
+            with open(label_path, 'r',encoding="utf-8") as file:
                 for line in file:
                     self.input.append(line)
         else:
