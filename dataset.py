@@ -32,6 +32,8 @@ def load_data(path, max_length=128):
     input=[]
     for file in file_list:
         file_path=osp.join(input_path,file)
+        if (os.path.basename(file_path) == "data_label.txt"):
+            continue
         with open(file_path,'r',encoding="utf-8") as f:
             lines=f.readlines()
             for line in lines:
