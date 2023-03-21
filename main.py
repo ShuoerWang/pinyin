@@ -1,5 +1,5 @@
 from torch.optim import AdamW
-from transformers import T5Tokenizer,T5ForConditionalGeneration
+from transformers import T5Tokenizer, T5Config, T5ForConditionalGeneration
 import os
 from utils import*
 from dataset import*
@@ -10,8 +10,21 @@ from tqdm.auto import tqdm
 
 def main():
     path='.s/data'
-    tokenizer = T5Tokenizer.from_pretrained("t5-base")
-    model = T5ForConditionalGeneration.from_pretrained("t5-base")
+    # tokenizer = T5Tokenizer.from_pretrained("t5-base")
+    # model = T5ForConditionalGeneration.from_pretrained("t5-base")
+    pretrained_model = "IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese"
+    special_tokens = ["<extra_id_{}>".format(i) for i in range(100)]
+    tokenizer = T5Tokenizer.from_pretrained(
+        pretrained_model,
+        do_lower_case=True,
+        max_length=512,
+        truncation=True,
+        additional_special_tokens=special_tokens,
+    )
+    config = T5Config.from_pretrained(pretrained_model)
+    model = T5ForConditionalGeneration.from_pretrained(pretrained_model, config=config)
+    model.resize_token_embeddings(len(tokenizer))
+
     train_dataset=InputDataset(path,tokenizer)
     train_dataloader = DataLoader(train_dataset,batch_size=18)
 
