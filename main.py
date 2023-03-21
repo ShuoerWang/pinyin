@@ -32,7 +32,6 @@ def main():
     config = T5Config.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese")
     model = T5ForConditionalGeneration.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese", config=config)
     model.resize_token_embeddings(len(tokenizer))
-    model = model.to(device)
 
     train_dataset=InputDataset(path,tokenizer)
     train_dataloader = DataLoader(train_dataset,batch_size=18)

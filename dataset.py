@@ -94,7 +94,7 @@ class InputDataset(Dataset):
         }
 
 if __name__=='__main__':
-    path='./data'
+    path='./data2'
     # data = load_data(path)
     # output = translate(data, path)
     # print("*******")
