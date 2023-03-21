@@ -10,7 +10,7 @@ from tqdm.auto import tqdm
 
 
 def main():
-    path='./data2'
+    path='./data'
     # tokenizer = T5Tokenizer.from_pretrained("t5-base")
     # model = T5ForConditionalGeneration.from_pretrained("t5-base")
 

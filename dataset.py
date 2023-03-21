@@ -50,7 +50,7 @@ class InputDataset(Dataset):
         return len(self.test)
     
     def __getitem__(self,item):
-        input_sequence = self.prefix + self.input[item]
+        input_sequence = self.input[item]
         output_sequence = self.test[item]
         
         encoding = self.tokenizer(
