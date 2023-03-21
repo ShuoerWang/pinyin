@@ -2,6 +2,7 @@ from torch.utils.data import Dataset,DataLoader
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 from utils import *
 import re
+import os
 from pypinyin import pinyin, lazy_pinyin, Style
 
 def split_line(line, max_length=512):
@@ -11,7 +12,7 @@ def split_line(line, max_length=512):
 def translate(input, path):
     output = input.copy()
     input_path=osp.join(path, 'data_label.txt')
-    file = open(input_path, 'w')
+    file = open(input_path, 'w',encoding="utf-8")
     for k in range(len(output)):
         i = 0
         while i < len(output[k]):
@@ -35,16 +36,23 @@ def load_data(path, max_length=128):
             lines=f.readlines()
             for line in lines:
                 if (len(line) <= max_length):
-                    input.append(line.strip())
+                    input.append(line.strip().rstrip("\n"))
                 else:
-                    input.extend(split_line(line.strip()))
+                    input.extend(split_line(line.strip().rstrip("\n")))
         f.close()
     return input
 
 class InputDataset(Dataset):
     def __init__(self, path, tokenizer, max_source_chinese_length=128):
         self.test=load_data(path, max_source_chinese_length)
-        self.input=translate(self.test)
+        label_path=osp.join(path, 'data_label.txt')
+        if os.path.exists(label_path):
+            self.input = []
+            with open(input_path, 'r',encoding="utf-8") as file:
+                for line in file:
+                    self.input.append(line)
+        else:
+            self.input=translate(self.test, path)
         self.tokenizer=tokenizer
         self.max_target_length = max_source_chinese_length
         self.max_source_length= max_source_chinese_length*6
@@ -86,17 +94,25 @@ class InputDataset(Dataset):
         }
 
 if __name__=='__main__':
-    path='../data'
+    path='./data'
     # data = load_data(path)
-    # print(data)
-    # output = translate(data)
-    # print(output)
-    # print("11111")
-    tokenizer = T5Tokenizer.from_pretrained("t5-small")
-    model = T5ForConditionalGeneration.from_pretrained("t5-small")
-    train_dataset=InputDataset(path,tokenizer)
-    train_dataloader = DataLoader(train_dataset,batch_size=6)
-    batch = next(iter(train_dataloader))
-    print(batch)
-    loss = model(input_ids=batch['input_ids'], attention_mask=batch['attention_mask'], labels=batch['labels']).loss
-    print(loss.item())
+    # output = translate(data, path)
+    # print("*******")
+    # print(len(data))
+    # print(len(output))
+    input_path=osp.join(path, 'data_label.txt')
+    line_count = 0
+
+    with open(input_path, 'r',encoding="utf-8") as file:
+        for line in file:
+            line_count += 1
+
+    print("Number of lines:", line_count)
+    # tokenizer = T5Tokenizer.from_pretrained("t5-small")
+    # model = T5ForConditionalGeneration.from_pretrained("t5-small")
+    # train_dataset=InputDataset(path,tokenizer)
+    # train_dataloader = DataLoader(train_dataset,batch_size=6)
+    # batch = next(iter(train_dataloader))
+    # print(batch)
+    # loss = model(input_ids=batch['input_ids'], attention_mask=batch['attention_mask'], labels=batch['labels']).loss
+    # print(loss.item())
