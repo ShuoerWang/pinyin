@@ -1,6 +1,6 @@
 from torch.optim import AdamW
-# from transformers import T5Tokenizer, T5Config, T5ForConditionalGeneration
-from transformers import BertTokenizer, T5ForConditionalGeneration, Text2TextGenerationPipeline
+from transformers import T5Tokenizer, T5Config, T5ForConditionalGeneration
+# from transformers import BertTokenizer, T5ForConditionalGeneration, Text2TextGenerationPipeline
 import os
 from utils import*
 from dataset import*
@@ -27,8 +27,12 @@ def main():
     # model = T5ForConditionalGeneration.from_pretrained(pretrained_model, config=config)
     # model.resize_token_embeddings(len(tokenizer))
 
-    tokenizer = BertTokenizer.from_pretrained("uer/t5-small-chinese-cluecorpussmall")
-    model = T5ForConditionalGeneration.from_pretrained("uer/t5-small-chinese-cluecorpussmall")
+    special_tokens = ["<extra_id_{}>".format(i) for i in range(100)]
+    tokenizer = T5Tokenizer.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese", additional_special_tokens=special_tokens,)
+    config = T5Config.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese")
+    model = T5ForConditionalGeneration.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese", config=config)
+    model.resize_token_embeddings(len(tokenizer))
+    model = model.to(device)
 
     train_dataset=InputDataset(path,tokenizer)
     train_dataloader = DataLoader(train_dataset,batch_size=18)

@@ -8,8 +8,10 @@ def split_line(line, max_length=512):
     chunks = [line[i:i+max_length] for i in range(0, len(line), max_length)]
     return chunks
 
-def translate(input):
+def translate(input, path):
     output = input.copy()
+    input_path=osp.join(path, 'data_label.txt')
+    file = open(input_path, 'w')
     for k in range(len(output)):
         i = 0
         while i < len(output[k]):
@@ -19,6 +21,8 @@ def translate(input):
                 i += len(py)
             else:
                 i += 1
+        file.write("%s\n" % output[k])
+    file.close()
     return output
 
 def load_data(path, max_length=128):
