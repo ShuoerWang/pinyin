@@ -34,7 +34,7 @@ def main():
     model.resize_token_embeddings(len(tokenizer))
 
     train_dataset=InputDataset(path,tokenizer)
-    train_dataloader = DataLoader(train_dataset,batch_size=1)
+    train_dataloader = DataLoader(train_dataset,batch_size=4)
 
     optimizer = AdamW(model.parameters(), lr=3e-4)
     num_epochs = 3
@@ -50,9 +50,9 @@ def main():
 
     model.train()
     mkdir("model")
-    i = 0;
     for epoch in range(num_epochs):
         model.save_pretrained(f"model/saved_model_epoch{-1}")
+        i = 0;
         for batch in train_dataloader:
             input_ids=batch['input_ids'].to(device)
             attention_mask=batch['attention_mask'].to(device)
@@ -66,7 +66,7 @@ def main():
             optimizer.zero_grad()
             progress_bar.update(1)
             i += 1
-        if (i % 100 == 0):
+        if (i % 1000 == 0):
             print(loss)
         model.save_pretrained(f"model/saved_model_epoch{epoch}")
 
