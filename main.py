@@ -50,6 +50,7 @@ def main():
 
     model.train()
     mkdir("model")
+    i = 0;
     for epoch in range(num_epochs):
         model.save_pretrained(f"model/saved_model_epoch{-1}")
         for batch in train_dataloader:
@@ -64,6 +65,9 @@ def main():
             lr_scheduler.step()
             optimizer.zero_grad()
             progress_bar.update(1)
+            i += 1
+        if (i % 100 == 0):
+            print(loss)
         model.save_pretrained(f"model/saved_model_epoch{epoch}")
 
 if __name__=='__main__':
