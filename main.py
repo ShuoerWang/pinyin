@@ -66,7 +66,7 @@ def main():
             optimizer.zero_grad()
             progress_bar.update(1)
             i += 1
-        if (i % 1000 == 0):
+        if (i % 40 == 0):
             print(loss)
         model.save_pretrained(f"model/saved_model_epoch{epoch}")
 
