@@ -52,7 +52,7 @@ def main():
     mkdir("model")
     for epoch in range(num_epochs):
         model.save_pretrained(f"model/saved_model_epoch{-1}")
-        i = 0;
+
         for batch in train_dataloader:
             input_ids=batch['input_ids'].to(device)
             attention_mask=batch['attention_mask'].to(device)
@@ -65,9 +65,7 @@ def main():
             lr_scheduler.step()
             optimizer.zero_grad()
             progress_bar.update(1)
-            i += 1
-        if (i % 40 == 0):
-            print(loss)
+
         model.save_pretrained(f"model/saved_model_epoch{epoch}")
 
 if __name__=='__main__':

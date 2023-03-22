@@ -64,8 +64,8 @@ class InputDataset(Dataset):
         return len(self.test)
     
     def __getitem__(self,item):
-        input_sequence = self.input[item]
-        output_sequence = self.test[item]
+        input_sequence = self.input[item].strip()
+        output_sequence = self.test[item].strip()
         
         encoding = self.tokenizer(
             input_sequence,
