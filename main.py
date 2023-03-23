@@ -29,8 +29,7 @@ def main():
 
     special_tokens = ["<extra_id_{}>".format(i) for i in range(100)]
     tokenizer = T5Tokenizer.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese", additional_special_tokens=special_tokens,)
-    config = T5Config.from_pretrained("./saved_model_epoch2")
-    model = T5ForConditionalGeneration.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese", config=config)
+    model = T5ForConditionalGeneration.from_pretrained("./saved_model_epoch2")
     model.resize_token_embeddings(len(tokenizer))
 
     train_dataset=InputDataset(path,tokenizer)
