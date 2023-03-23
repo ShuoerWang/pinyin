@@ -1,6 +1,6 @@
 import os
 
-folder_path = "./data2"
+folder_path = "./data"
 
 for filename in os.listdir(folder_path):
     file_path = os.path.join(folder_path, filename)

@@ -10,7 +10,7 @@ from tqdm.auto import tqdm
 
 
 def main():
-    path='./data2'
+    path='./data'
     # tokenizer = T5Tokenizer.from_pretrained("t5-base")
     # model = T5ForConditionalGeneration.from_pretrained("t5-base")
 
@@ -29,7 +29,7 @@ def main():
 
     special_tokens = ["<extra_id_{}>".format(i) for i in range(100)]
     tokenizer = T5Tokenizer.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese", additional_special_tokens=special_tokens,)
-    config = T5Config.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese")
+    config = T5Config.from_pretrained("./saved_model_epoch2")
     model = T5ForConditionalGeneration.from_pretrained("IDEA-CCNL/Randeng-T5-784M-MultiTask-Chinese", config=config)
     model.resize_token_embeddings(len(tokenizer))
 
